@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bg_gradient"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/volverAdd"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/volver"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="20dp">
+
+    <TextView
+        android:text="Agregar Ciudad"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="italic|bold"
+        android:layout_marginBottom="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/etCityName"
+        android:hint="Ingrese el nombre de la ciudad"
+        android:padding="10dp"
+        android:textColor="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/btnSaveCity"
+        android:text="AÑADIR"
+        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:background="@drawable/round_button"
+        app:backgroundTint="@null"
+        android:textColor="@color/white"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnAdd"
+        android:text="+"
+        android:textSize="24sp"
+        android:layout_margin="10dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:textColor="@color/white"
+        android:background="@drawable/round_button"
+        app:backgroundTint="@null" />
+</LinearLayout>

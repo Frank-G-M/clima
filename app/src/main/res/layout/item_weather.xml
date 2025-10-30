@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/imgWeather"
+        android:src="@drawable/lugar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp" />
+
+    <!-- Ciudad -->
+    <TextView
+        android:id="@+id/tvCity"
+        android:text="Bogotá"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold|italic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="start|center_vertical" />
+
+    <!-- Temperatura -->
+    <TextView
+        android:id="@+id/tvTemp"
+        android:text="20°C"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <!-- Hora -->
+    <TextView
+        android:id="@+id/textViewTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="end|center_vertical"
+        android:text="--:--"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
+</LinearLayout>
