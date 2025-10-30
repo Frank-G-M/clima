@@ -13,7 +13,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -49,6 +48,14 @@ public class AddCityActivity extends AppCompatActivity {
     }
 
     private void obtenerYGuardarClima(String cityName) {
+        DBHelper dbHelperCheck = new DBHelper(this);
+        if (dbHelperCheck.cityExists(cityName)) {
+            Toast.makeText(this, "La ciudad ya está en la lista", Toast.LENGTH_SHORT).show();
+            dbHelperCheck.close();
+            return;
+        }
+        dbHelperCheck.close();
+
         String url = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName +
                 "&appid=" + API_KEY + "&units=metric&lang=es";
 
@@ -57,35 +64,30 @@ public class AddCityActivity extends AppCompatActivity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 response -> {
                     try {
-                        // Datos principales
                         JSONObject main = response.getJSONObject("main");
                         double temp = main.getDouble("temp");
                         int humidity = main.getInt("humidity");
 
-                        // Descripción
                         JSONArray weatherArray = response.getJSONArray("weather");
                         JSONObject weatherObject = weatherArray.getJSONObject(0);
                         String description = weatherObject.getString("description");
 
-                        // Zona horaria (en segundos desde UTC)
-                        long timezone = response.getLong("timezone");
+                        long timezoneOffset = response.getLong("timezone");
 
-                        // Crear modelo
                         WeatherModel weather = new WeatherModel(
                                 0,
                                 cityName,
                                 temp,
                                 humidity,
                                 description,
-                                timezone
+                                timezoneOffset
                         );
-
-                        // Guardar en SQLite
                         DBHelper dbHelper = new DBHelper(this);
                         dbHelper.insertWeather(weather);
 
                         Toast.makeText(this, "Ciudad agregada correctamente", Toast.LENGTH_SHORT).show();
                         finish();
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(this, "Error al procesar los datos", Toast.LENGTH_SHORT).show();
@@ -93,8 +95,6 @@ public class AddCityActivity extends AppCompatActivity {
                 },
                 error -> Toast.makeText(this, "No se encontró la ciudad", Toast.LENGTH_SHORT).show()
         );
-
         queue.add(request);
     }
-
 }

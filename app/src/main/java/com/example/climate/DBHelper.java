@@ -12,7 +12,7 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "weather.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "weather";
 
     private static final String COLUMN_ID = "id";
@@ -20,7 +20,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_TEMP = "temperature";
     private static final String COLUMN_HUMIDITY = "humidity";
     private static final String COLUMN_DESC = "description";
-    private static final String COLUMN_TIMEZONE = "timezone";
+    private static final String COLUMN_TIME = "time";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 COLUMN_TEMP + " REAL, " +
                 COLUMN_HUMIDITY + " INTEGER, " +
                 COLUMN_DESC + " TEXT, " +
-                COLUMN_TIMEZONE + " INTEGER)";
+                COLUMN_TIME + " TEXT)";
         db.execSQL(createTable);
     }
 
@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COLUMN_TEMP, weather.getTemperature());
         values.put(COLUMN_HUMIDITY, weather.getHumidity());
         values.put(COLUMN_DESC, weather.getDescription());
-        values.put(COLUMN_TIMEZONE, weather.getTimezone());
+        values.put(COLUMN_TIME, weather.getTimezone());
         db.insert(TABLE_NAME, null, values);
         db.close();
     }
@@ -77,11 +77,22 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
         return list;
     }
-
     public boolean deleteCity(String cityName) {
         SQLiteDatabase db = this.getWritableDatabase();
         int rowsDeleted = db.delete(TABLE_NAME, COLUMN_CITY + " = ?", new String[]{cityName});
         db.close();
         return rowsDeleted > 0;
+    }
+
+    public boolean cityExists(String cityName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(
+                "SELECT * FROM " + TABLE_NAME + " WHERE LOWER(" + COLUMN_CITY + ") = LOWER(?)",
+                new String[]{cityName}
+        );
+        boolean exists = cursor.getCount() > 0;
+        cursor.close();
+        db.close();
+        return exists;
     }
 }

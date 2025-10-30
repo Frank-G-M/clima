@@ -8,14 +8,15 @@
     android:background="@drawable/bg_gradient"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
+
     <ImageView
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="center"
-        android:src="@drawable/clima"/>
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:src="@drawable/clima" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

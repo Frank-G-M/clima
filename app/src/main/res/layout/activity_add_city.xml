@@ -7,16 +7,25 @@
     android:background="@drawable/bg_gradient"
     android:fitsSystemWindows="true">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:src="@drawable/clima" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
         <ImageView
             android:id="@+id/volverAdd"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/volver"
-            android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"/>
     </LinearLayout>
 
@@ -36,15 +45,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/etCityName"
-        android:hint="Ingrese el nombre de la ciudad"
-        android:padding="10dp"
-        android:textColor="@color/black"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/etCityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ingrese el nombre de la ciudad"
+            android:padding="10dp"
+            android:textColor="@color/white" />
 
-    <Button
+        <Button
         android:id="@+id/btnSaveCity"
         android:text="AÑADIR"
         android:textStyle="bold"

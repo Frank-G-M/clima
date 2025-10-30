@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
@@ -62,15 +61,49 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         holder.tvCity.setText(weather.getCity());
         holder.tvTemp.setText(String.format(Locale.getDefault(), "%.1f°C", weather.getTemperature()));
 
-        long timezoneOffset = weather.getTimezone();
-        long currentTimeMillis = System.currentTimeMillis();
-        long localTimeMillis = currentTimeMillis + (timezoneOffset * 1000);
+        int weatherIcon = getWeatherIcon(weather.getDescription());
+        holder.imgWeather.setImageResource(weatherIcon);
 
-        Date date = new Date(localTimeMillis);
+        long timezoneOffset = weather.getTimezone();
+
+        // ✅ MÉTODO MÁS CONFIABLE - Usar TimeZone directamente
+        TimeZone cityTimeZone = TimeZone.getTimeZone("GMT");
+        cityTimeZone.setRawOffset((int) (timezoneOffset * 1000)); // Convertir a milisegundos
+
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        String localTime = sdf.format(date);
+        sdf.setTimeZone(cityTimeZone);
+
+        String localTime = sdf.format(new Date());
 
         holder.textViewTime.setText("Hora local: " + localTime);
+    }
+
+    private int getWeatherIcon(String description) {
+        if (description == null) return R.drawable.ic_default;
+
+        String desc = description.toLowerCase();
+
+        if (desc.contains("clear") || desc.contains("despejado") || desc.contains("soleado")) {
+            return R.drawable.ic_clear;
+        } else if (desc.contains("cloud") || desc.contains("nublado") || desc.contains("nubes")) {
+            return R.drawable.ic_cloudy;
+        } else if (desc.contains("rain") || desc.contains("lluvia") || desc.contains("lluvioso")) {
+            return R.drawable.ic_rain;
+        } else if (desc.contains("snow") || desc.contains("nieve") || desc.contains("nevando")) {
+            return R.drawable.ic_snow;
+        } else if (desc.contains("storm") || desc.contains("tormenta") || desc.contains("truenos")) {
+            return R.drawable.ic_storm;
+        } else if (desc.contains("mist") || desc.contains("neblina") || desc.contains("bruma") || desc.contains("niebla")) {
+            return R.drawable.ic_mist;
+        } else if (desc.contains("drizzle") || desc.contains("llovizna")) {
+            return R.drawable.ic_rain;
+        } else if (desc.contains("thunderstorm")) {
+            return R.drawable.ic_storm;
+        } else if (desc.contains("fog")) {
+            return R.drawable.ic_mist;
+        } else {
+            return R.drawable.ic_default;
+        }
     }
 
     @Override
