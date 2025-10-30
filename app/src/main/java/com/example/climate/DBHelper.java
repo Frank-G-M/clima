@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +13,6 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "weather.db";
     private static final int DATABASE_VERSION = 3;
     private static final String TABLE_NAME = "weather";
-
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_CITY = "city";
     private static final String COLUMN_TEMP = "temperature";

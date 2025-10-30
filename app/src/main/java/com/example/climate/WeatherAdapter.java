@@ -66,9 +66,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
         long timezoneOffset = weather.getTimezone();
 
-        // ✅ MÉTODO MÁS CONFIABLE - Usar TimeZone directamente
         TimeZone cityTimeZone = TimeZone.getTimeZone("GMT");
-        cityTimeZone.setRawOffset((int) (timezoneOffset * 1000)); // Convertir a milisegundos
+        cityTimeZone.setRawOffset((int) (timezoneOffset * 1000));
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         sdf.setTimeZone(cityTimeZone);
