@@ -1,11 +1,13 @@
 package com.example.climate;
 
+import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.text.SimpleDateFormat;
@@ -19,6 +21,17 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     private List<WeatherModel> list;
     private Handler handler = new Handler();
     private Runnable updateTimeRunnable;
+
+    // Interface para el click listener
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     public WeatherAdapter(List<WeatherModel> list) {
         this.list = list;
@@ -75,6 +88,61 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         String localTime = sdf.format(new Date());
 
         holder.textViewTime.setText("Hora local: " + localTime);
+
+        // Manejar clicks en el item para pronóstico
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    int adapterPosition = holder.getAdapterPosition();
+                    if (adapterPosition != RecyclerView.NO_POSITION) {
+                        onItemClickListener.onItemClick(adapterPosition);
+                    }
+                }
+            }
+        });
+
+        // ✅ AGREGAR ESTO - Botón para eliminar ciudad
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    String cityName = list.get(adapterPosition).getCity();
+                    showDeleteDialog(holder.itemView.getContext(), cityName, adapterPosition);
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private void showDeleteDialog(Context context, String cityName, int position) {
+        new android.app.AlertDialog.Builder(context)
+                .setTitle("Eliminar Ciudad")
+                .setMessage("¿Estás seguro de que quieres eliminar " + cityName + "?")
+                .setPositiveButton("Eliminar", new android.content.DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(android.content.DialogInterface dialog, int which) {
+                        deleteCity(context, cityName, position);
+                    }
+                })
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+
+    private void deleteCity(Context context, String cityName, int position) {
+        DBHelper dbHelper = new DBHelper(context);
+        boolean deleted = dbHelper.deleteCity(cityName);
+
+        if (deleted) {
+            list.remove(position);
+            notifyItemRemoved(position);
+            Toast.makeText(context, cityName + " eliminada", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Error al eliminar", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private int getWeatherIcon(String description) {

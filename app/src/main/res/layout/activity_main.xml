@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/bg_gradient"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:padding="16dp">
 
+    <!-- Título -->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="80dp"
@@ -18,41 +17,49 @@
         android:gravity="center"
         android:src="@drawable/clima" />
 
+    <!-- Lista de ciudades actual -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp" />
+        android:layout_weight="1" />
 
-    <LinearLayout
+    <!-- Separador -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#FFFFFF"
+        android:layout_marginVertical="16dp" />
+
+    <!-- Título de pronósticos -->
+    <TextView
+        android:id="@+id/tvForecastTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:text="Pronóstico: "
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/btnAdd"
-            android:text="AGREGAR CUIDAD"
-            android:textSize="16sp"
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:background="@drawable/round_button"
-            android:textStyle="italic"
-            app:backgroundTint="@null" />
+    <!-- RecyclerView horizontal para pronósticos -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewForecast"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:visibility="gone" />
 
-        <Button
-            android:id="@+id/btnDelete"
-            android:text="ELIMINAR CUIDAD"
-            android:textSize="16sp"
-            android:layout_margin="10dp"
-            android:textStyle="italic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:background="@drawable/round_button"
-            app:backgroundTint="@null"/>
-    </LinearLayout>
+    <!-- Botón para agregar ciudad -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:background="@drawable/bg_gradient"
+        app:backgroundTint="@null"
+        android:src="@android:drawable/ic_input_add"
+        app:tint="#2468D7" />
+
 </LinearLayout>
