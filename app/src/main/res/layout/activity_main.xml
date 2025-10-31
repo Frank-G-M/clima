@@ -57,9 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:background="@drawable/bg_gradient"
-        app:backgroundTint="@null"
         android:src="@android:drawable/ic_input_add"
-        app:tint="#2468D7" />
+        app:tint="#FFFFFF"
+        app:backgroundTint="@color/btn"
+    android:elevation="8dp"
+    android:clickable="true"
+    android:focusable="true" />
 
 </LinearLayout>
