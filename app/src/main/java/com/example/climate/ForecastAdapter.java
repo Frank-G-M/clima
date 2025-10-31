@@ -91,7 +91,7 @@ public class ForecastAdapter extends RecyclerView.Adapter<ForecastAdapter.ViewHo
     public void updateData(List<ForecastModel> newForecastList) {
         Log.d("ForecastAdapter", "updateData llamado con: " + newForecastList.size() + " elementos");
 
-        // ✅ LIMPIAR LA LISTA ACTUAL Y AGREGAR LOS NUEVOS DATOS
+        // LIMPIAR LA LISTA ACTUAL Y AGREGAR LOS NUEVOS DATOS
         this.forecastList.clear();
         if (newForecastList != null) {
             this.forecastList.addAll(newForecastList);

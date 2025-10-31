@@ -22,7 +22,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     private Handler handler = new Handler();
     private Runnable updateTimeRunnable;
 
-    // Interface para el click listener
     private OnItemClickListener onItemClickListener;
 
     public interface OnItemClickListener {
@@ -102,7 +101,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             }
         });
 
-        // ✅ AGREGAR ESTO - Botón para eliminar ciudad
+        // Botón para eliminar ciudad
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void processForecastData(JSONObject response, String cityName) throws JSONException {
-        // ✅ CREAR NUEVA LISTA en lugar de limpiar la existente
+        //CREAR NUEVA LISTA en lugar de limpiar la existente
         List<ForecastModel> newForecastList = new ArrayList<>();
 
         JSONArray list = response.getJSONArray("list");
@@ -153,18 +153,18 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("ForecastDebug", "Total de pronósticos procesados: " + newForecastList.size());
 
-        // ✅ PASAR LA NUEVA LISTA AL ADAPTER
+        // PASAR LA NUEVA LISTA AL ADAPTER
         final List<ForecastModel> finalList = newForecastList;
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // ✅ ACTUALIZAR CON LA NUEVA LISTA
+                // ACTUALIZAR CON LA NUEVA LISTA
                 forecastAdapter.updateData(finalList);
 
                 Log.d("ForecastDebug", "Adapter item count después de update: " + forecastAdapter.getItemCount());
 
-                // ✅ MOSTRAR LA SECCIÓN
+                // MOSTRAR LA SECCIÓN
                 showForecastSection(cityName);
             }
         });
